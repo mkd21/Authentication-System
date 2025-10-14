@@ -1,0 +1,23 @@
+
+
+--> import and route setup happens Synchronously 
+
+
+express.json()
+This is a built-in middleware in Express that parses incoming requests with JSON payloads. It reads the JSON data sent from the client (e.g., in POST or PUT requests), converts it into a JavaScript object, and stores it in req.body for easy access in routes. It enables your app to understand JSON request bodies. The limit: "20kb" option restricts the maximum size of JSON payload.​
+
+express.urlencoded()
+This middleware parses incoming requests with URL-encoded payloads (typically from HTML forms). It converts form data sent as URL-encoded strings or arrays into JavaScript objects accessible in req.body. The extended: true option allows for rich objects and arrays to be encoded.​
+
+cookie-parser
+This middleware parses cookies attached to the client request object. It populates req.cookies with an object keyed by cookie names, allowing your app to read and manipulate cookies easily. It helps in managing sessions, authentication tokens, or other cookie-based data exchange between client and server.​
+
+cookie-parser helps read the data sent inside cookies from the client, such as access tokens and refresh tokens. When a client sends cookies along with requests, cookie-parser parses those cookies and makes them available as an object in req.cookies, so your server can easily read and verify tokens stored in cookies for authentication or session management.
+
+
+while creating user model
+
+name , email and password --> required
+
+verifyOtp , verifyOtpExpireAt , isAccountVerified , resetOtp , resetOtpExpireAt   -> non-mandatory fields
+
