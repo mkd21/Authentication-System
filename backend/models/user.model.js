@@ -65,6 +65,11 @@ UserSchema.methods.generateRefreshToken = function()
     return jwt.sign({UserId : this._id} , process.env.JWT_SECRET_REFRESH , {expiresIn : "7d"});
 }
 
+UserSchema.methods.isPasswordCorrect = function()
+{
+    
+}
+
 // checks if model already exist or what 
 const User = mongoose.models.user || mongoose.model("User" , UserSchema);
 

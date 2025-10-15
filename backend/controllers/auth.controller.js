@@ -38,13 +38,30 @@ const signUp = asyncWrapper( async(req , res) =>{
     
     const {refreshToken , accessToken} = await generate_Access_Refresh_Token(newUser._id);
 
-    res.cookie( "token" , refreshToken , {
+    return res.cookie( "token" , refreshToken , {
         httpOnly : true,
         secure : process.env.NODE_ENV === "production",
         sameSite : process.env.NODE_ENV === "development" ? "strict" : "none",
         maxAge : 7 * 24 * 60 * 60 * 1000
     })
     .json({message : "success"});
+
+});
+
+
+const login = asyncWrapper( async(req , res) =>{
+
+    const {email , password} = req.body;
+
+    if(!email || !password) throw new Error("email and password is mandatory");
+
+    const specificUser = await User.findOne({email});
+
+    if(!specificUser) throw new Error("user don't exist");
+
+    // if here then , verify password 
+
+    
 
 });
 
