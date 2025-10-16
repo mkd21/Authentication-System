@@ -65,9 +65,9 @@ UserSchema.methods.generateRefreshToken = function()
     return jwt.sign({UserId : this._id} , process.env.JWT_SECRET_REFRESH , {expiresIn : "7d"});
 }
 
-UserSchema.methods.isPasswordCorrect = function()
+UserSchema.methods.isPasswordCorrect = async function(userPassword)
 {
-    
+    return await bcrypt.compare(userPassword , this.password);
 }
 
 // checks if model already exist or what 

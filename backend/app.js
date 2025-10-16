@@ -9,6 +9,8 @@ app.use(express.json({limit : "20kb"}));
 app.use(express.urlencoded({extended : true}));
 app.use(cookieParser());
 
+
+// routes setup 
 import authRoutes from "./routes/authRoutes.routes.js";
 
 
