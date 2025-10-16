@@ -60,7 +60,7 @@ const login = asyncWrapper( async(req , res) =>{
 
     if(!specificUser) throw new Error("user don't exist");
 
-    
+
     // if here then , verify password 
 
     const isUserGenuine = await specificUser.isPasswordCorrect(password);
@@ -73,7 +73,13 @@ const login = asyncWrapper( async(req , res) =>{
 
     const {accessToken , refreshToken} = await generate_Access_Refresh_Token(plainObject._id);
 
-    console.log(refreshToken);
+    return res.cookie("token" , refreshToken , {
+        httpOnly : true,
+        secure : process.env.NODE_ENV === "production",
+        sameSite : process.env.NODE_ENV === "development" ? "strict" : "none",
+        maxAge : 7 * 24 * 60 * 60 * 1000 
+    })
+    .json({message : "user logged in successfully"});
 
 });
 
