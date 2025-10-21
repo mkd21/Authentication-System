@@ -41,6 +41,10 @@ const UserSchema = new mongoose.Schema({
     resetOtpExpireAt : {
         type : Number,
         default : 0
+    },
+
+    token : {
+        type : String
     }
 });
 

@@ -10,7 +10,7 @@ const generate_Access_Refresh_Token = async(userId) =>{
     const accessToken = currentUser.generateAccessToken();
     const refreshToken = currentUser.generateRefreshToken();
 
-    currentUser.refreshToken = refreshToken;
+    currentUser.token = refreshToken;
 
     await currentUser.save({validateBeforeSave : false});
 
@@ -48,7 +48,6 @@ const signUp = asyncWrapper( async(req , res) =>{
 
 });
 
-
 const login = asyncWrapper( async(req , res) =>{
 
     const {email , password} = req.body;
@@ -83,4 +82,14 @@ const login = asyncWrapper( async(req , res) =>{
 
 });
 
-export {signUp , login};
+const logout = asyncWrapper( async(req , res) =>{
+
+//   now we just need to delete the token from the user document 
+
+    await User.findByIdAndUpdate(req.specificUser._id , { $set : {refreshToken : null} });
+
+    return res.status(200).json({message : "user logged out successfully"});
+    
+});
+
+export {signUp , login , logout};
