@@ -86,7 +86,7 @@ const logout = asyncWrapper( async(req , res) =>{
 
 //   now we just need to delete the token from the user document 
 
-    await User.findByIdAndUpdate(req.specificUser._id , { $set : {refreshToken : null} });
+    await User.findByIdAndUpdate(req.specificUser._id , { $set : {token : null} });
 
     return res.status(200).json({message : "user logged out successfully"});
     
