@@ -3,6 +3,8 @@ import User from "../models/user.model.js";
 
 import asyncWrapper from "../utils/asyncWrapper.utils.js";
 
+import transporter from "../utils/nodemailer.utils.js";
+
 const generate_Access_Refresh_Token = async(userId) =>{
 
     const currentUser = await User.findById(userId);
@@ -37,6 +39,17 @@ const signUp = asyncWrapper( async(req , res) =>{
     // send token to frontend if user is successfully created 
     
     const {refreshToken , accessToken} = await generate_Access_Refresh_Token(newUser._id);
+
+    // send email to user after successful signup 
+
+    const emailOptions = {
+        from : process.env.SENDER_EMAIL,
+        to : email,
+        subject : "Welcome to Auth App",
+        text : `Hi, your account with email id ${email} has been successfully created, verification password will be sent shortly`
+    }
+
+    await transporter.sendMail(emailOptions);
 
     return res.cookie( "token" , refreshToken , {
         httpOnly : true,
