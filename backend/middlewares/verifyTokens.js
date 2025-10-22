@@ -15,8 +15,6 @@ const verifyTokens = async(req , res , next) =>{
 
         if(!decoded) return res.status(500).json({message : "internal error with verifying token"});
 
-        console.log(decoded);
-        
         const user = await User.findById(decoded.UserId);
 
         if(!user) return res.status(401).json({message : "user not found"});

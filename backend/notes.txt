@@ -21,3 +21,9 @@ name , email and password --> required
 
 verifyOtp , verifyOtpExpireAt , isAccountVerified , resetOtp , resetOtpExpireAt   -> non-mandatory fields
 
+
+app password 
+hekg jegp puxj hzgi
+
+app name 
+auth-project
