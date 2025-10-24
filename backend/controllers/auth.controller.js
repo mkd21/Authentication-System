@@ -105,4 +105,19 @@ const logout = asyncWrapper( async(req , res) =>{
     
 });
 
-export {signUp , login , logout};
+
+const sendVerificationOtp = ( async(req , res) =>{
+
+    const user = req.user;
+    console.log(user);
+
+    const otp = String( Math.floor(100000 + Math.random() * 900000) );
+
+    user.verifyOtp = otp;
+    user.verifyOtpExpireAt = Date.now() * 10 * 60 * 1000;  // otp expiry duration is 10 minutes
+
+    await user.save();
+
+});
+
+export {signUp , login , logout , sendVerificationOtp};
