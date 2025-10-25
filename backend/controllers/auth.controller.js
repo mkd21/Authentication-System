@@ -105,16 +105,25 @@ const logout = asyncWrapper( async(req , res) =>{
     
 });
 
-
 const sendVerificationOtp = ( async(req , res) =>{
 
     const user = req.user;
-    console.log(user);
 
     const otp = String( Math.floor(100000 + Math.random() * 900000) );
 
     user.verifyOtp = otp;
     user.verifyOtpExpireAt = Date.now() * 10 * 60 * 1000;  // otp expiry duration is 10 minutes
+
+    // now send the same otp to the current user email 
+
+    const emailOptions = {
+        from : process.env.SENDER_EMAIL,
+        to : user.email,
+        subject : "Verification OTP",
+        text : `Hi,Your OTP is ${otp}.Please use this OTP to verify your account`
+    }
+
+    await transporter.sendMail(emailOptions);
 
     await user.save();
 
