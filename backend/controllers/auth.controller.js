@@ -127,6 +127,34 @@ const sendVerificationOtp = ( async(req , res) =>{
 
     await user.save();
 
+    return res.status(200).json({message : "OTP sent successfully!!"});
+
 });
 
-export {signUp , login , logout , sendVerificationOtp};
+const verifyAccount = ( async(req , res) =>{
+
+    const user = req.specificUser;
+    const {otp} = req.body;
+
+    if(!otp) return res.status(401).json({message : "OTP is required"});
+
+    if(!user) return res.status(500).json({message : "Internal Server Error"});
+
+    if(user.verifyOtp != otp || user.verifyOtp === "") return res.status(401).json({message : "unauthorised request"});
+
+
+    // if otp is valid now check for the expiry date 
+    if(user.verifyOtpExpireAt < Date.now()) return res.status(401).json({message : "OTP already Expired"});
+    
+    user.isAccountVerified = true;
+
+    user.verifyOtp = "";
+    user.verifyOtpExpireAt = 0;
+
+    await user.save();
+
+    return res.status(200).json({message : "Account Verified Successfully"});
+
+});
+
+export {signUp , login , logout , sendVerificationOtp , verifyAccount};

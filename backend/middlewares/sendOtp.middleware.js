@@ -14,8 +14,6 @@ export const sendOtp = async(req , res , next) =>{
 
         if(!verifiedUser) return res.status(401).json({message : "unauthorised access"});
 
-        console.log(verifiedUser);
-
         const targetUser = await User.findById(verifiedUser.UserId);
 
         if(!targetUser) throw res.status(400).json({message : "user not found"});
