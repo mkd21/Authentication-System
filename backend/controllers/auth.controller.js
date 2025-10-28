@@ -53,13 +53,7 @@ const signUp = asyncWrapper( async(req , res) =>{
 
     await transporter.sendMail(emailOptions);
 
-    return res.cookie( "token" , refreshToken , {
-        httpOnly : true,
-        secure : process.env.NODE_ENV === "production",
-        sameSite : process.env.NODE_ENV === "development" ? "strict" : "none",
-        maxAge : 7 * 24 * 60 * 60 * 1000
-    })
-    .json({message : "success"});
+    return res.status(200).json({message : "account created successfully"});
 
 });
 
@@ -183,7 +177,42 @@ const isAuthenticated = ( async(req , res) =>{
 });
 
 
-// controllers for resetting password 
+// controllers for resetting password (user will send email and we will verify if )
+const sendResetOtp = asyncWrapper( async(req , res) =>{
+
+    const {email} = req.body;
+
+    if(!email) return res.status(401).json({message : "email is required"});
+    
+    const user = await User.findOne({email});
+    
+    // if user exist then we will generate reset otp and otp expiry time 
+
+    const Otp = Math.floor((100000 + Math.random() * 900000));
+
+    const otpExpiryDate = Date.now() + 15 * 60 * 1000;
+
+    user.resetOtp = Otp;
+    user.resetOtpExpireAt = otpExpiryDate;
+
+    user.save();
+
+    const emailContent = {
+        from : process.env.SENDER_EMAIL,
+        to : email,
+        subject : "Reset Password OTP",
+        text : `Hi,your OTP for resetting your password is ${Otp}`
+    }
+
+    await transporter.sendMail(emailContent);
+
+    return res.status(200).json({message : "OTP for resetting your account password is sent successfull to email"});
+});
+
+const resetPassword = asyncWrapper( async(req , res) ={
 
 
-export {signUp , login , logout , sendVerificationOtp , verifyAccount , isAuthenticated};
+
+})
+
+export {signUp , login , logout , sendVerificationOtp , verifyAccount , isAuthenticated , sendResetOtp};
