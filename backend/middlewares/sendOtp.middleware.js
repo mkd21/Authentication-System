@@ -20,6 +20,7 @@ export const sendOtp = async(req , res , next) =>{
 
         req.user = targetUser;
         next();
+        
     }
     catch(err)
     {

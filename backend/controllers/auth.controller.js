@@ -5,6 +5,8 @@ import asyncWrapper from "../utils/asyncWrapper.utils.js";
 
 import transporter from "../utils/nodemailer.utils.js";
 
+import jwt from "jsonwebtoken";
+
 const generate_Access_Refresh_Token = async(userId) =>{
 
     const currentUser = await User.findById(userId);
@@ -105,6 +107,8 @@ const logout = asyncWrapper( async(req , res) =>{
     
 });
 
+
+// controller for sending OTP and verification of account 
 const sendVerificationOtp = ( async(req , res) =>{
 
     const user = req.user;
@@ -157,4 +161,29 @@ const verifyAccount = ( async(req , res) =>{
 
 });
 
-export {signUp , login , logout , sendVerificationOtp , verifyAccount};
+
+// controller to check if account is verified or not 
+const isAuthenticated = ( async(req , res) =>{
+
+    const token = req.cookie?.token || req.headers?.authorization?.split(" ")[1];
+
+    if(!token) return res.status(401).json({message : "required token error"});
+
+    const verifiedToken = jwt.verify(token , process.env.JWT_SECRET_REFRESH);
+
+    console.log(verifiedToken);
+
+    const user = await User.findById(verifiedToken.UserId);
+    console.log(user);
+
+    if(!user.isAccountVerified) return res.status(401).json({message : "account is not verified,please verify your account"});
+
+    return res.status(200).json({message : "Account is Verified"});
+
+});
+
+
+// controllers for resetting password 
+
+
+export {signUp , login , logout , sendVerificationOtp , verifyAccount , isAuthenticated};
