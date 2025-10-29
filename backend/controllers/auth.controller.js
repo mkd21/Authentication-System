@@ -7,6 +7,8 @@ import transporter from "../utils/nodemailer.utils.js";
 
 import jwt from "jsonwebtoken";
 
+import bcrypt from "bcrypt";
+
 const generate_Access_Refresh_Token = async(userId) =>{
 
     const currentUser = await User.findById(userId);
@@ -37,10 +39,6 @@ const signUp = asyncWrapper( async(req , res) =>{
     // hash the password and add user to DB 
 
     const newUser = await User.create({name , email , password});
-
-    // send token to frontend if user is successfully created 
-    
-    const {refreshToken , accessToken} = await generate_Access_Refresh_Token(newUser._id);
 
     // send email to user after successful signup 
 
@@ -209,10 +207,29 @@ const sendResetOtp = asyncWrapper( async(req , res) =>{
     return res.status(200).json({message : "OTP for resetting your account password is sent successfull to email"});
 });
 
-const resetPassword = asyncWrapper( async(req , res) ={
+const resetPassword = asyncWrapper( async(req , res) =>{
 
+    const {email , password , otp} = req.body;
 
+    if(!email || !password || !otp) return res.status(401).json({message : "Email , Password and OTP are required"});
 
-})
+    const user = await User.findOne({email});
 
-export {signUp , login , logout , sendVerificationOtp , verifyAccount , isAuthenticated , sendResetOtp};
+    if(!user) return res.status(401).json({message : "User not found"});
+
+    // if otp is not correct 
+    if(user.resetOtp != otp) return res.status(401).json({message : "OTP is not valid"});
+
+    // if otp is expired 
+    if(user.resetOtpExpireAt < Date.now()) return res.status(500).json({message : "OTP expired"});
+
+    user.password = password;   // it will be encrypted when pre hook will execute before saving the data to DB
+    user.resetOtp = "";
+    user.resetOtpExpireAt = 0;
+
+    user.save();
+
+    return res.status(200).json({message : "password updated successfully!!"});
+});
+
+export {signUp , login , logout , sendVerificationOtp , verifyAccount , isAuthenticated , sendResetOtp , resetPassword};
