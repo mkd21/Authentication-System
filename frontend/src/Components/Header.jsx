@@ -3,7 +3,9 @@ import { assets } from "../assets/assets.js";
 export default function Header() {
   return (
 
-    <div className="flex flex-col items-center ">
+    <div className="flex flex-col items-center justify-center min-h-[90.7vh] bg-[url('../bg_img.png')]  bg-cover bg-center
+        md:mt-[4rem]">
+
             {/* image */}
             <div className=" md:w-[10%] ">
                 <img
@@ -38,7 +40,7 @@ export default function Header() {
 
             {/* button  */}
             <div className="md:mt-8" >
-                <button className=" border p-[0.7rem] rounded-full " >Get Started</button>
+                <button className=" border p-[0.7rem] rounded-full hover:bg-gray-200 " >Get Started</button>
             </div>
     </div>
   );
