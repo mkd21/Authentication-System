@@ -1,0 +1,45 @@
+import { assets } from "../assets/assets.js";
+
+export default function Header() {
+  return (
+
+    <div className="flex flex-col items-center ">
+            {/* image */}
+            <div className=" md:w-[10%] ">
+                <img
+                    src={assets.header_img}
+                    alt="robo image"
+                    className=" rounded-full "
+                />
+            </div>
+
+            {/* texts  */}
+            <div>
+                <section className="flex items-center justify-center ">
+                    <h1 className=" md:text-[1.6rem] md:mr-4 font-semibold ">
+                    Hey Developer
+                    </h1>
+                    <img src={assets.hand_wave} alt="" className=" md:w-[1.7rem] " />
+                </section>
+
+                <section className="">
+                    <h1 className=" md:text-[2rem] font-[600] text-center ">
+                    Welcome to our app
+                    </h1>
+                </section>
+
+                <section className="">
+                    <h2 className=" text-[1.2rem] " >
+                    Lets start with a quick product tour and we will have you up and
+                    running in no time!
+                    </h2>
+                </section>
+            </div>
+
+            {/* button  */}
+            <div className="md:mt-8" >
+                <button className=" border p-[0.7rem] rounded-full " >Get Started</button>
+            </div>
+    </div>
+  );
+}
