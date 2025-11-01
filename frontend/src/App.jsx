@@ -1,4 +1,5 @@
 
+
 import {createBrowserRouter , RouterProvider} from "react-router-dom";
 
 // importing all the pages 
@@ -9,6 +10,7 @@ import ResetPassword from "./Pages/ResetPassword.jsx";
 import VerifyAccount from "./Pages/VerifyAccount.jsx";
 
 import './App.css';
+
 
 const router = createBrowserRouter([
 
@@ -31,11 +33,19 @@ const router = createBrowserRouter([
 
 ]);
 
+
+import { AppContextProvider } from "./context/createContext.jsx";
+
 function App() {
+
 
   return (
     <>
-      <RouterProvider router = {router} />
+
+      <AppContextProvider>
+        <RouterProvider router = {router} /> 
+      </AppContextProvider>
+
     </>
   )
 }
