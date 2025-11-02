@@ -7,13 +7,13 @@ import { assets } from "../assets/assets.js";
 
 import { AppContext } from "../context/createContext.jsx";
 
-
+import { toast } from 'react-toastify';
 
 function Login() {
 
     const [formState , updateState] = useState("Signup");
 
-    const [formData , updateFormData] = useState({ fullname : "" , email : "" , password : "" });
+    const [formData , updateFormData] = useState({name : "" , email : "" , password : "" });
 
     const handleChange = (e) =>{
       
@@ -30,22 +30,43 @@ function Login() {
     const navigate = useNavigate();
 
     // using context variables 
-    const {isLoggedIn , backendURL , userData} = useContext(AppContext);
+    const {isLoggedIn , updateIsLoggedIn , backendURL , userData} = useContext(AppContext);
     
     const handleFormSubmit = async(e) =>{
 
       e.preventDefault();
+      axios.defaults.withCredentials = true;
 
       try
       { 
         if(formState == "Signup")
         {
-          await axios.post();
+          const res =  await axios.post(backendURL + "/signup" , formData);
+          
+          if(res.status == 200)
+          {
+            updateIsLoggedIn(true);
+            navigate("/");
+
+          }
+        }
+        else
+        {
+            const res = await axios.post(backendURL + "/login" , {email : formData.email , password : formData.password});
+            console.log(res);
+
+            if(res.status == 200)
+            {
+              navigate("/");
+              toast.success(res.data.message);
+            }
         }
       }
       catch(err)
       {
-
+        console.log("inside the catch block");
+        console.log(err);
+        toast.error(err.response.data.message);
       }
 
     }
@@ -77,7 +98,7 @@ function Login() {
               <span className="text-white font-medium">Full Name</span>
               <input
                 type="text"
-                name="fullname"
+                name="name"
                 className="mt-1 block w-full rounded-md px-3 py-2 focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 required
                 value={formData.fullname}

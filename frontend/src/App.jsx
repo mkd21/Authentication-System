@@ -9,6 +9,9 @@ import Login from "./Pages/Login.jsx";
 import ResetPassword from "./Pages/ResetPassword.jsx";
 import VerifyAccount from "./Pages/VerifyAccount.jsx";
 
+// react toastify 
+import { ToastContainer} from 'react-toastify';
+
 import './App.css';
 
 
@@ -41,11 +44,10 @@ function App() {
 
   return (
     <>
-
-      <AppContextProvider>
-        <RouterProvider router = {router} /> 
-      </AppContextProvider>
-
+        <AppContextProvider>
+          <RouterProvider router = {router} /> 
+          <ToastContainer autoClose = {1000} />
+        </AppContextProvider>
     </>
   )
 }
