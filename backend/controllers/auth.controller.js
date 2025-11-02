@@ -59,19 +59,18 @@ const login = asyncWrapper( async(req , res) =>{
 
     const {email , password} = req.body;
 
-
     if(!email || !password) throw new Error("email and password is mandatory");
 
     const specificUser = await User.findOne({email}).select("+password")
 
-    if(!specificUser) throw new Error("user don't exist");
+    if(!specificUser) return res.status(401).json({message : "no user found"});
 
 
     // if here then , verify password 
 
     const isUserGenuine = await specificUser.isPasswordCorrect(password);
 
-    if(!isUserGenuine) throw new Error("wrong credentials");
+    if(!isUserGenuine) return res.status(500).json({message : "wrong credentials"});
 
     const plainObject = specificUser.toObject();
 
