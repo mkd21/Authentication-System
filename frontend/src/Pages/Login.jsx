@@ -30,7 +30,7 @@ function Login() {
     const navigate = useNavigate();
 
     // using context variables 
-    const {isLoggedIn , updateIsLoggedIn , backendURL , userData} = useContext(AppContext);
+    const {isLoggedIn , updateIsLoggedIn , backendURL , userData  , updateAccessToken} = useContext(AppContext);
     
     const handleFormSubmit = async(e) =>{
 
@@ -47,18 +47,18 @@ function Login() {
           {
             updateIsLoggedIn(true);
             navigate("/");
-
           }
         }
         else
         {
             const res = await axios.post(backendURL + "/login" , {email : formData.email , password : formData.password});
-            console.log(res);
 
             if(res.status == 200)
             {
               navigate("/");
               toast.success(res.data.message);
+              updateAccessToken(res.data.accessToken);
+              localStorage.setItem("accessToken" , res.data.accessToken);
             }
         }
       }

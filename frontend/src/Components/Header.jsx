@@ -1,6 +1,15 @@
+
+import { useContext } from "react";
+import { AppContext } from "../context/createContext.jsx";
+
 import { assets } from "../assets/assets.js";
 
 export default function Header() {
+
+    const {userData} = useContext(AppContext);
+
+    console.log(userData);
+
   return (
 
     <div className="flex flex-col items-center justify-center min-h-[90.7vh] bg-[url('../bg_img.png')]  bg-cover bg-center
@@ -17,25 +26,25 @@ export default function Header() {
 
             {/* texts  */}
             <div>
+                
                 <section className="flex items-center justify-center ">
+
                     <h1 className=" md:text-[1.6rem] md:mr-4 font-semibold ">
-                    Hey Developer
+                        { userData ? `Hey ${userData}` : "Hey Developer" }
                     </h1>
+
                     <img src={assets.hand_wave} alt="" className=" md:w-[1.7rem] " />
+
                 </section>
 
                 <section className="">
-                    <h1 className=" md:text-[2rem] font-[600] text-center ">
-                    Welcome to our app
-                    </h1>
+                    <h1 className=" md:text-[2rem] font-[600] text-center"> Welcome to our app </h1>
                 </section>
 
                 <section className="">
-                    <h2 className=" text-[1.2rem] " >
-                    Lets start with a quick product tour and we will have you up and
-                    running in no time!
-                    </h2>
+                    <h2 className=" text-[1.2rem]">Lets start with a quick product tour and we will have you up and running in no time!</h2>
                 </section>
+
             </div>
 
             {/* button  */}

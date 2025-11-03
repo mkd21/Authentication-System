@@ -60,7 +60,7 @@ UserSchema.pre("save" , async function(next){
 // tokens generation methods 
 UserSchema.methods.generateAccessToken = function()
 {
-    return jwt.sign({ userId : this._id} , process.env.JWT_SECRET_ACCESS , {expiresIn : "15m"});
+    return jwt.sign({ userId : this._id} , process.env.JWT_SECRET_ACCESS , {expiresIn : "30m"});
 }
 
 UserSchema.methods.generateRefreshToken = function()

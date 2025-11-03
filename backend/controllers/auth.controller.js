@@ -84,7 +84,7 @@ const login = asyncWrapper( async(req , res) =>{
         sameSite : process.env.NODE_ENV === "development" ? "strict" : "none",
         maxAge : 7 * 24 * 60 * 60 * 1000 
     })
-    .json({message : "user logged in successfully"});
+    .json({message : "user logged in successfully" , accessToken});
 
 });
 
