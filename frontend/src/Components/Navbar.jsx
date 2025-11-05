@@ -3,12 +3,32 @@ import {useNavigate} from "react-router-dom";
 import { useContext } from "react";
 import { AppContext } from "../context/createContext.jsx";
 import {assets} from "../assets/assets.js";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 function Navbar()
 {
-    const {userData} = useContext(AppContext);
+    const {userData , backendURL , updateUserData } = useContext(AppContext);
 
     const navigate = useNavigate();
+
+    const handleLogout = async() =>{
+
+        axios.defaults.withCredentials = true;
+
+        try
+        {
+            const res = await axios.post(backendURL + "/logout");
+            console.log(res);
+
+            if(res.status == 200) localStorage.removeItem("accessToken");
+            updateUserData(null);
+        }
+        catch(error)
+        {
+            console.log(error);
+        }
+    }
 
     return(
 
@@ -23,9 +43,10 @@ function Navbar()
                 (userData) ? <div className=" relative group md:w-[3rem] p-[10px] text-white bg-black flex items-center justify-around border-2 rounded-full font-bold hover:cursor-pointer">
                         <div> <p>{userData.userName[0].toUpperCase()} </p> </div>
 
-                        <div className="hidden absolute mt-[7rem] w-[8rem] text-center bg-slate-100 text-black rounded-lg group-hover:block" >
-                            <button className=" mt-1 border-b-2" >Verify Account</button>
-                            <button className="my-1 border-b-2 " >Log out</button>
+                        <div className={ (userData.accountVerificationStatus) ? `hidden absolute mt-[4.4rem] w-[8rem] text-center bg-slate-100 text-black rounded-lg group-hover:block` : `hidden absolute mt-[6.3rem] w-[8rem] text-center bg-slate-100 text-black rounded-lg group-hover:block`} >
+                            { !userData.accountVerificationStatus && <button className=" mt-1 border-b-2" >Verify Account</button>}
+                            
+                            <button className="" onClick={handleLogout} >Log out</button>
                         </div>
                         
                     </div> 

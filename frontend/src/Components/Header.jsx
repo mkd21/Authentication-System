@@ -30,7 +30,7 @@ export default function Header() {
                 <section className="flex items-center justify-center ">
 
                     <h1 className=" md:text-[1.6rem] md:mr-4 font-semibold ">
-                        { userData ? `Hey ${userData.userName.charAt(0).toUpperCase() + userData.userName.slice(1) }` : "Hey Developer" }
+                        { userData ? `Hey, ${userData.userName.charAt(0).toUpperCase() + userData.userName.slice(1) }` : "Hey Developer" }
                     </h1>
 
                     <img src={assets.hand_wave} alt="" className=" md:w-[1.7rem] " />
