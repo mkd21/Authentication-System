@@ -88,11 +88,20 @@ const login = asyncWrapper( async(req , res) =>{
 
 });
 
+
 const logout = asyncWrapper( async(req , res) =>{
 
 //   now we just need to delete the token from the user document 
 
     await User.findByIdAndUpdate(req.specificUser._id , { $set : {token : null} });
+
+    res.clearCookie("token" , 
+        {
+            httpOnly : true , 
+            secure : process.env.NODE_ENV === "production" , 
+            sameSite : process.env.NODE_ENV === "development" ? "strict" : "none"
+        }
+    );
 
     return res.status(200).json({message : "user logged out successfully"});
     
