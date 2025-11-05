@@ -9,11 +9,10 @@ export const AppContext = createContext(null);
 export const AppContextProvider = (props) => {
 
   const [isLoggedIn, updateIsLoggedIn] = useState(false);
-  const [userData, updateUserData] = useState(false);
+  const [userData, updateUserData] = useState(null);
   const [accessToken , updateAccessToken ] = useState(() => localStorage.getItem("accessToken"));
 
-  const backendURL = "http://localhost:4000/api";
-
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
 
   const getUserData = async() =>{
 
@@ -22,7 +21,7 @@ export const AppContextProvider = (props) => {
           const res = await axios.get(backendURL + "/get-data" , { headers : {Authorization : `Bearer ${accessToken}`} });
           console.log(res);
 
-          if(res.status == 200)updateUserData(res.data.userName);
+          if(res.status == 200)updateUserData(res.data);
           
       }
       catch(err)
