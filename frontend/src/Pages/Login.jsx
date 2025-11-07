@@ -138,7 +138,7 @@ function Login() {
           </p>
 
           <button type="submit" className="w-full bg-white text-gray-800 py-2 rounded-md hover:bg-gray-100 transition-colors font-semibold">
-            Register
+            {formState.toUpperCase()}
           </button>
 
           {/* text to choose btwn login and signup  */}

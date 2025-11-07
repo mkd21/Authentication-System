@@ -38,7 +38,7 @@ export const AppContextProvider = (props) => {
   }, [accessToken] );
 
   
-  return (<AppContext.Provider value={ {isLoggedIn , updateIsLoggedIn , userData , updateUserData , backendURL , updateAccessToken } }>
+  return (<AppContext.Provider value={ {isLoggedIn , updateIsLoggedIn , userData , updateUserData , backendURL , updateAccessToken , accessToken } }>
             {props.children}
         </AppContext.Provider>);
         

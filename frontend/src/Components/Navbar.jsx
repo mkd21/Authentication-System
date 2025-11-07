@@ -8,18 +8,16 @@ import { toast } from "react-toastify";
 
 function Navbar()
 {
-    const {userData , backendURL , updateUserData } = useContext(AppContext);
+    const {userData , backendURL , updateUserData , accessToken } = useContext(AppContext);
 
     const navigate = useNavigate();
 
     const handleLogout = async() =>{
 
         axios.defaults.withCredentials = true;
-
         try
         {
             const res = await axios.post(backendURL + "/logout");
-            console.log(res);
 
             if(res.status == 200) localStorage.removeItem("accessToken");
             updateUserData(null);
@@ -28,6 +26,23 @@ function Navbar()
         {
             console.log(error);
         }
+    }
+
+    const handleVerifyAccount = async() =>{
+
+        try {
+            const res = await axios.post(backendURL + "/send-verification-otp", {},
+                { headers : {Authorization : `Bearer ${accessToken}`} });
+
+                if(res.status == 200)
+                {
+                    navigate("/verify-account");
+                }
+
+        } catch (error) {
+            console.log(error);
+        }
+
     }
 
     return(
@@ -44,7 +59,10 @@ function Navbar()
                         <div> <p>{userData.userName[0].toUpperCase()} </p> </div>
 
                         <div className={ (userData.accountVerificationStatus) ? `hidden absolute mt-[4.4rem] w-[8rem] text-center bg-slate-100 text-black rounded-lg group-hover:block` : `hidden absolute mt-[6.3rem] w-[8rem] text-center bg-slate-100 text-black rounded-lg group-hover:block`} >
-                            { !userData.accountVerificationStatus && <button className=" mt-1 border-b-2" >Verify Account</button>}
+
+                            { !userData.accountVerificationStatus && 
+                                <button className=" mt-1 border-b-2" onClick={handleVerifyAccount}  >Verify Account</button>
+                            }
                             
                             <button className="" onClick={handleLogout} >Log out</button>
                         </div>

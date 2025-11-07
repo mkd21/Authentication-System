@@ -10,21 +10,28 @@ function VerifyAccount()
     
 
     const handleChange = (index , e) =>{
-        
-        const updatedArr = [...formBox];
-        updatedArr[index] = e.target.value;
-        updateBox(updatedArr);
-
-        if(e.target.value && index < formBox.length-1)
+    
+        const value = e.target.value;
+        console.log(value);
+        if(/^[0-9]$/.test(value) || value == "" )
         {
-            inputRefs.current[index + 1].focus();
-        }
+            const updatedArr = [...formBox];
+            updatedArr[index] = value;
+            updateBox(updatedArr);
+            
+            if(e.target.value && index < formBox.length-1)
+            {
+                inputRefs.current[index + 1].focus();
+            }
 
-        const otp = updatedArr.join("");
+            const otp = updatedArr.join("");
 
-        if(otp.length == formBox.length) console.log("serval call made with opt",otp);
+            if(otp.length == formBox.length) console.log("serval call made with opt",otp);
+        }        
     }
 
+    
+    // will keep the focus on first input when page is loaded
     useEffect( () => {
 
         if(inputRefs.current[0]){
@@ -36,12 +43,10 @@ function VerifyAccount()
     const handleClick = () => {}
 
     const handleKeyDown = (e , index) => {
-        
         if(e.key == "Backspace" && index > 0)
         {
             inputRefs.current[index - 1].focus();
         }
-
     }
 
     return (
@@ -52,8 +57,6 @@ function VerifyAccount()
                     formBox.map( (val , idx) => (
                         <input 
                             type="string" 
-                            inputMode="numeric"
-                            pattern="[0-9]*"
                             key={idx} 
                             value={val}
                             maxLength={1}
