@@ -13,7 +13,7 @@ const generate_Access_Refresh_Token = async(userId) =>{
 
     const currentUser = await User.findById(userId);
 
-    const accessToken = currentUser.generateAccessToken();
+    const accessToken = currentUser.generateAccessToken();   // these methods are attached on user docs and not on whole model
     const refreshToken = currentUser.generateRefreshToken();
 
     currentUser.token = refreshToken;

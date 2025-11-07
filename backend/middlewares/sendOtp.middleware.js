@@ -6,15 +6,18 @@ export const sendOtp = async(req , res , next) =>{
 
     try 
     {
-        const {token} = req.cookies;
+        const token = req.header("Authorization")?.replace("Bearer " , "");
+
         console.log(token);
 
         if(!token) return res.status(401).json({message : "invalid request"});
 
-        const verifiedUser = jwt.verify(token , process.env.JWT_SECRET_REFRESH);
+        const verifiedUser = jwt.verify(token , process.env.JWT_SECRET_ACCESS);
 
         if(!verifiedUser) return res.status(401).json({message : "unauthorised access"});
 
+        console.log(verifiedUser);
+        
         const targetUser = await User.findById(verifiedUser.UserId);
 
         if(!targetUser) throw res.status(400).json({message : "user not found"});
