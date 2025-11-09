@@ -61,7 +61,7 @@ function Navbar()
                         <div className={ (userData.accountVerificationStatus) ? `hidden absolute mt-[4.4rem] w-[8rem] text-center bg-slate-100 text-black rounded-lg group-hover:block` : `hidden absolute mt-[6.3rem] w-[8rem] text-center bg-slate-100 text-black rounded-lg group-hover:block`} >
 
                             { !userData.accountVerificationStatus && 
-                                <button className=" mt-1 border-b-2" onClick={handleVerifyAccount}  >Verify Account</button>
+                                <button className=" mt-1 border-b-2" onClick={handleVerifyAccount}>Verify Account</button>
                             }
                             
                             <button className="" onClick={handleLogout} >Log out</button>

@@ -64,7 +64,7 @@ function Login() {
       }
       catch(err)
       {
-        console.log("inside the catch block");
+        
         console.log(err);
         toast.error(err.response.data.message);
       }
