@@ -169,7 +169,7 @@ const isAuthenticated = ( async(req , res) =>{
 
     if(!token) return res.status(401).json({message : "required token error"});
 
-    const verifiedToken = jwt.verify(token , process.env.JWT_SECRET_REFRESH);
+    const verifiedToken = jwt.verify(token , process.env.JWT_SECRET_ACCESS);
 
     console.log(verifiedToken);
 
