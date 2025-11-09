@@ -36,27 +36,44 @@ function VerifyAccount()
 
             if(otp.length == formBox.length)
             {
-                const res = await axios.post(backendURL + "/verify-account" , {otp});
 
-                console.log(res);
-
-                if(res.status == 200)
+                try 
                 {
-                    navigate("/");
-                    toast.success("Account Verified");
+                    const res = await axios.post(backendURL + "/verify-account" , {otp});
 
-                    // this will remove the verify account option when we will be redirected to homepage.
-                    const res = await axios.post(backendURL + "/is-auth" , {} , {headers : {Authorization : `Bearer ${accessToken}`}});
+                    console.log(res);
+
                     if(res.status == 200)
                     {
-                        updateUserData( (prev) => ( {...prev , accountVerificationStatus : true} ) );
+                        navigate("/");
+                        toast.success("Account Verified");
+
+                        // this will remove the verify account option when we will be redirected to homepage.
+                        const res = await axios.post(backendURL + "/is-auth" , {} , {headers : {Authorization : `Bearer ${accessToken}`}});
+                        if(res.status == 200)
+                        {
+                            updateUserData( (prev) => ( {...prev , accountVerificationStatus : true} ) );
+                        }
                     }
+                } 
+                catch (error) 
+                {
+                    toast.error("unable to verify account");
                 }
+                
             }
         }        
     }
+ 
+    // will not allow to open the verify-account url if the account is verified 
+    useEffect( () => {
 
-    
+        if(userData?.accountVerificationStatus)
+            navigate("/");
+
+    } , [userData] )
+
+
     // will keep the focus on first input when page is loaded
     useEffect( () => {
 
@@ -66,7 +83,6 @@ function VerifyAccount()
 
     } , [] );
 
-    const handleClick = () => {}
 
     const handleKeyDown = (e , index) => {
         if(e.key == "Backspace" && index > 0)
@@ -105,7 +121,6 @@ function VerifyAccount()
                                 hover:scale-105 focus:scale-110"
 
                                 onChange={(e) => handleChange(idx, e)}
-                                onClick={handleClick}
                                 onKeyUp={(e) => handleKeyDown(e, idx)}
                             />
                             ))}

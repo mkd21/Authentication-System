@@ -31,10 +31,7 @@ export const AppContextProvider = (props) => {
   }
 
   useEffect( () => {
-
-    console.log("use effect called");
     if(accessToken) getUserData();
-
   }, [accessToken] );
 
   
