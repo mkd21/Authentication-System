@@ -71,7 +71,7 @@ function VerifyAccount()
         if(userData?.accountVerificationStatus)
             navigate("/");
 
-    } , [userData] )
+    } , [userData] );
 
 
     // will keep the focus on first input when page is loaded
