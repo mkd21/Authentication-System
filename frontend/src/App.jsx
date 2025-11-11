@@ -44,10 +44,12 @@ function App() {
 
   return (
     <>
-        <AppContextProvider>
+        {/* <AppContextProvider>
           <RouterProvider router = {router} /> 
           <ToastContainer autoClose = {1000} />
-        </AppContextProvider>
+        </AppContextProvider> */}
+
+        <ResetPassword />
     </>
   )
 }

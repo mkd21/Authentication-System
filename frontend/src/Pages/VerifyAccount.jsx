@@ -84,11 +84,23 @@ function VerifyAccount()
     } , [] );
 
 
-    const handleKeyDown = (e , index) => {
-        if(e.key == "Backspace" && index > 0)
+    const handleKeyUp = (e , index) => {
+        if(e.key == "Backspace" || e.key == "ArrowLeft" && index > 0)
         {
             inputRefs.current[index - 1].focus();
         }
+
+        if(e.key == "ArrowRight" && index < formBox.length - 1)
+        {
+            const element = inputRefs.current[index + 1];
+            if(element)
+            {
+                element.setSelectionRange(1 , 1);
+            }
+            
+            inputRefs.current[index + 1].focus();
+        }
+
     }
 
     return (
@@ -121,7 +133,7 @@ function VerifyAccount()
                                 hover:scale-105 focus:scale-110"
 
                                 onChange={(e) => handleChange(idx, e)}
-                                onKeyUp={(e) => handleKeyDown(e, idx)}
+                                onKeyUp={(e) => handleKeyUp(e, idx)}
                             />
                             ))}
                         </div>
