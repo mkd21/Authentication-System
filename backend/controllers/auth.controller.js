@@ -193,7 +193,8 @@ const sendResetOtp = asyncWrapper( async(req , res) =>{
     const user = await User.findOne({email});
     
     // if user exist then we will generate reset otp and otp expiry time 
-
+    if(!user) return res.status(401).json({message : "no user found"});
+    
     const Otp = Math.floor((100000 + Math.random() * 900000));
 
     const otpExpiryDate = Date.now() + 15 * 60 * 1000;

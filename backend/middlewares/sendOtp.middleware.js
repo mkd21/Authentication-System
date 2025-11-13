@@ -8,7 +8,6 @@ export const sendOtp = async(req , res , next) =>{
     {
         const token = req.header("Authorization")?.replace("Bearer " , "");
 
-        console.log(token);
 
         if(!token) return res.status(401).json({message : "invalid request"});
 
@@ -16,8 +15,6 @@ export const sendOtp = async(req , res , next) =>{
 
         if(!verifiedUser) return res.status(401).json({message : "unauthorised access"});
 
-        console.log(verifiedUser);
-        
         const targetUser = await User.findById(verifiedUser.UserId);
 
         if(!targetUser) throw res.status(400).json({message : "user not found"});
