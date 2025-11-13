@@ -48,10 +48,10 @@ function Navbar()
     return(
 
         <div className="w-full flex justify-between items-center fixed top-0
-            md:h-16 md:px-16">
+            h-16 px-4 md:px-16">
             
             <div>
-                <img src={assets.logo} alt="project logo" />
+                <img src={assets.logo} alt="project logo" className="w-full" />
             </div>
         
             {
@@ -69,7 +69,15 @@ function Navbar()
                         
                     </div> 
                 : 
-                <button onClick={() => navigate("/login")}  className="md:w-[6rem] p-2 flex items-center justify-around border-2 border-black rounded-full font-semibold hover:bg-blue-100 "> Login <img src={assets.arrow_icon} alt="" /> </button>
+                <button onClick={() => navigate("/login")}  
+                    className ="
+                    flex items-center justify-around border-2 border-black rounded-full font-semibold hover:bg-blue-100 
+                    w-[5rem]
+                    md:w-[6rem] p-2 "> 
+
+                    Login <img src={assets.arrow_icon} alt="" /> 
+
+                </button>
             }
             
         </div>

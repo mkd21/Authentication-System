@@ -16,7 +16,7 @@ export default function Header() {
         md:mt-[4rem]">
 
             {/* image */}
-            <div className=" md:w-[10%] ">
+            <div className="w-[57%] md:w-[10%] ">
                 <img
                     src={assets.header_img}
                     alt="robo image"
@@ -29,20 +29,23 @@ export default function Header() {
                 
                 <section className="flex items-center justify-center ">
 
-                    <h1 className=" md:text-[1.6rem] md:mr-4 font-semibold ">
+                    <h1 className=" 
+                        text-[1.3rem]
+                        md:text-[1.6rem] md:mr-4 font-semibold 
+                    ">
                         { userData ? `Hey, ${userData.userName.charAt(0).toUpperCase() + userData.userName.slice(1) }` : "Hey Developer" }
                     </h1>
 
-                    <img src={assets.hand_wave} alt="" className=" md:w-[1.7rem] " />
+                    <img src={assets.hand_wave} alt="" className=" w-[1.3rem] md:w-[1.7rem] " />
 
                 </section>
 
                 <section className="">
-                    <h1 className=" md:text-[2rem] font-[600] text-center"> Welcome to our app </h1>
+                    <h1 className=" my-2  md:text-[2rem] font-[600] text-center"> Welcome to our app </h1>
                 </section>
 
-                <section className="">
-                    <h2 className=" text-[1.2rem]">Lets start with a quick product tour and we will have you up and running in no time!</h2>
+                <section className="px-4 text-center mb-3  ">
+                    <h2 className=" text-[1.2rem] xl:text-[1.6rem] ">Lets start with a quick product tour and we will have you up and running in no time!</h2>
                 </section>
 
             </div>
