@@ -13,11 +13,9 @@ function Navbar()
     const navigate = useNavigate();
 
     const handleLogout = async() =>{
-
-        axios.defaults.withCredentials = true;
         try
         {
-            const res = await axios.post(backendURL + "/logout");
+            const res = await axios.post(backendURL + "/logout" , {headers : {Authorization : `Bearer ${accessToken}`}});
 
             if(res.status == 200) localStorage.removeItem("accessToken");
             updateUserData(null);

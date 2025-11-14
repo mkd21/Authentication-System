@@ -8,6 +8,8 @@ const verifyAccessToken = async(req , res , next) =>{
     {
         const accessToken = req.header("Authorization")?.replace("Bearer " , "");
 
+        console.log(accessToken);
+        
         if(!accessToken) return res.status(401).json({message : "access token not found"});
 
         const decodedData = jwt.verify(accessToken , process.env.JWT_SECRET_ACCESS);
