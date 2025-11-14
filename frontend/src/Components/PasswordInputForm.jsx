@@ -13,7 +13,7 @@ export default function PasswordInputForm({backendURL , email , newPassword , re
        
         try 
         {
-            const res = await axios.post(backendURL + "/reset-password" , {email , password :  newPassword , otp :  resetOTP});
+            const res = await axios.post(backendURL + "/api/reset-password" , {email , password :  newPassword , otp :  resetOTP});
             console.log(res);
             toast.success("password updated!!");
             navigate("/");

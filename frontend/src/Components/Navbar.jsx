@@ -15,7 +15,7 @@ function Navbar()
     const handleLogout = async() =>{
         try
         {
-            const res = await axios.post(backendURL + "/logout" , {headers : {Authorization : `Bearer ${accessToken}`}});
+            const res = await axios.post(backendURL + "/api/logout" , {headers : {Authorization : `Bearer ${accessToken}`}});
 
             if(res.status == 200) localStorage.removeItem("accessToken");
             updateUserData(null);
@@ -29,7 +29,7 @@ function Navbar()
     const handleVerifyAccount = async() =>{
 
         try {
-            const res = await axios.post(backendURL + "/send-verification-otp", {},
+            const res = await axios.post(backendURL + "/api/send-verification-otp", {},
                 { headers : {Authorization : `Bearer ${accessToken}`} });
 
                 if(res.status == 200)

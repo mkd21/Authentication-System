@@ -20,7 +20,7 @@ function VerifyAccount()
     const handleChange = async(index , e) =>{
     
         const value = e.target.value;
-        console.log(value);
+       
         if(/^[0-9]$/.test(value) || value == "" )
         {
             const updatedArr = [...formBox];
@@ -39,9 +39,7 @@ function VerifyAccount()
 
                 try 
                 {
-                    const res = await axios.post(backendURL + "/verify-account" , {otp});
-
-                    console.log(res);
+                    const res = await axios.post(backendURL + "/api/verify-account" , {otp});
 
                     if(res.status == 200)
                     {
@@ -49,7 +47,7 @@ function VerifyAccount()
                         toast.success("Account Verified");
 
                         // this will remove the verify account option when we will be redirected to homepage.
-                        const res = await axios.post(backendURL + "/is-auth" , {} , {headers : {Authorization : `Bearer ${accessToken}`}});
+                        const res = await axios.post(backendURL + "/api/is-auth" , {} , {headers : {Authorization : `Bearer ${accessToken}`}});
                         if(res.status == 200)
                         {
                             updateUserData( (prev) => ( {...prev , accountVerificationStatus : true} ) );

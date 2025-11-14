@@ -170,10 +170,8 @@ const isAuthenticated = ( async(req , res) =>{
 
     const verifiedToken = jwt.verify(token , process.env.JWT_SECRET_ACCESS);
 
-    console.log(verifiedToken);
-
     const user = await User.findById(verifiedToken.UserId);
-    console.log(user);
+
 
     if(!user.isAccountVerified) return res.status(401).json({message : "account is not verified,please verify your account"});
 

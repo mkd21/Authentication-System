@@ -10,7 +10,7 @@ export default function EmailInput({emailUpdate , email , emailUpdater , backend
         
         try 
         {
-            const res = await axios.post(backendURL + "/reset-password-otp" , {email});
+            const res = await axios.post(backendURL + "/api/reset-password-otp" , {email});
             console.log(res);
             toast.success("OTP sent successfully");
             emailUpdate(true);

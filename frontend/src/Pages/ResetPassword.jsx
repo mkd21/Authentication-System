@@ -42,6 +42,7 @@ function ResetPassword() {
 
 
   const handleChange = (e, index) => {
+
     const updatedArr = [...inputArr];
     updatedArr[index] = e.target.value;
 
@@ -50,6 +51,7 @@ function ResetPassword() {
 
       inputRef.current[index + 1].setSelectionRange(1, 1);
     }
+
     updateInput(updatedArr);
 
     const resetOTP = updatedArr.join("");
@@ -64,10 +66,14 @@ function ResetPassword() {
   };
 
   const handleKeyUp = (e, index) => {
-    if (e.key == "Backspace" || (e.key == "ArrowLeft" && index > 0)) {
+
+    if (e.key == "Backspace" || (e.key == "ArrowLeft" && index > 0)) 
+    {
       inputRef.current[index - 1].focus();
     }
-    if (e.key == "ArrowRight" && index < inputArr.length - 1) {
+    if (e.key == "ArrowRight" && index < inputArr.length - 1) 
+    {
+      
       // setting the caret postion at the end of the input
       const element = inputRef.current[index + 1];
       element.setSelectionRange(1, 1);

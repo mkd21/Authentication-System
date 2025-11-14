@@ -18,7 +18,7 @@ export const AppContextProvider = (props) => {
 
       try
       {
-          const res = await axios.get(backendURL + "/get-data" , { headers : {Authorization : `Bearer ${accessToken}`} });
+          const res = await axios.get(backendURL + "/api/get-data" , { headers : {Authorization : `Bearer ${accessToken}`} });
           console.log(res);
 
           if(res.status == 200)updateUserData(res.data);
