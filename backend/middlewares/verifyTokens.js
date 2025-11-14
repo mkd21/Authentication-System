@@ -11,7 +11,7 @@ const verifyTokens = async(req , res , next) =>{
 
         if(!token) return res.status(401).json({message : "unauthorised access"});
 
-        const decoded = jwt.verify(token , process.env.JWT_SECRET_REFRESH);
+        const decoded = jwt.verify(token , process.env.JWT_SECRET_ACCESS);
 
         if(!decoded) return res.status(500).json({message : "internal error with verifying token"});
 
