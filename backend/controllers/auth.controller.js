@@ -7,7 +7,6 @@ import transporter from "../utils/nodemailer.utils.js";
 
 import jwt from "jsonwebtoken";
 
-import bcrypt from "bcrypt";
 
 const generate_Access_Refresh_Token = async(userId) =>{
 
