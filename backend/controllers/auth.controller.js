@@ -25,6 +25,7 @@ const generate_Access_Refresh_Token = async(userId) =>{
 const signUp = asyncWrapper( async(req , res) =>{
 
     const {email , password , name} = req.body;
+    console.log(email , password , name);
 
     if(!email || !password || !name) throw new Error("all fields are required");
 

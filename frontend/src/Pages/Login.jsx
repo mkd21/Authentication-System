@@ -41,12 +41,14 @@ function Login() {
       { 
         if(formState == "Signup")
         {
-          const res =  await axios.post(backendURL + "/api/signup" , {email : formData.email , password : formData.password , name : formData.name});
-          
+          const res =  await axios.post(backendURL + "/api/signup" , formData);
+          console.log(res);
+          //  {email : formData.email , password : formData.password , name : formData.name}
           if(res.status == 200)
           {
             updateIsLoggedIn(true);
             navigate("/");
+            toast.success(res.data.message);
           }
         }
         else
@@ -64,7 +66,6 @@ function Login() {
       }
       catch(err)
       {
-        
         console.log(err);
         toast.error(err.response.data.message);
       }
