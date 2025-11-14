@@ -42,14 +42,14 @@ const signUp = asyncWrapper( async(req , res) =>{
 
     // send email to user after successful signup 
 
-    const emailOptions = {
-        from : process.env.SENDER_EMAIL,
-        to : email,
-        subject : "Welcome to Auth App",
-        text : `Hi, your account with email id ${email} has been successfully created, verification password will be sent shortly`
-    }
+    // const emailOptions = {
+    //     from : process.env.SENDER_EMAIL,
+    //     to : email,
+    //     subject : "Welcome to Auth App",
+    //     text : `Hi, your account with email id ${email} has been successfully created, verification password will be sent shortly`
+    // }
 
-    await transporter.sendMail(emailOptions);
+    // await transporter.sendMail(emailOptions);
 
     return res.status(200).json({message : "account created successfully"});
 
