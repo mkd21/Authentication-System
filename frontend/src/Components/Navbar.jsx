@@ -15,9 +15,16 @@ function Navbar()
     const handleLogout = async() =>{
         try
         {
-            const res = await axios.post(backendURL + "/api/logout" , {headers : {Authorization : `Bearer ${accessToken}`}});
+            const res = await axios.post(backendURL + "/api/logout" ,
 
-            if(res.status == 200) localStorage.removeItem("accessToken");
+                {}, // empty body object
+
+                {headers : {Authorization : `Bearer ${accessToken}`}});
+
+            if(res.status == 200) {
+                localStorage.removeItem("accessToken");
+            }
+            
             updateUserData(null);
         }
         catch(error)
@@ -29,7 +36,10 @@ function Navbar()
     const handleVerifyAccount = async() =>{
 
         try {
-            const res = await axios.post(backendURL + "/api/send-verification-otp", {},
+            const res = await axios.post(backendURL + "/api/send-verification-otp",
+
+                {}, // empty body object
+
                 { headers : {Authorization : `Bearer ${accessToken}`} });
 
                 if(res.status == 200)

@@ -39,7 +39,7 @@ function VerifyAccount()
 
                 try 
                 {
-                    const res = await axios.post(backendURL + "/api/verify-account" , {otp});
+                    const res = await axios.post(backendURL + "/api/verify-account" , {otp} , {headers : {Authorization : `Bearer ${accessToken}`}});
 
                     if(res.status == 200)
                     {
