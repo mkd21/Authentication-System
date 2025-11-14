@@ -41,7 +41,7 @@ function Login() {
       { 
         if(formState == "Signup")
         {
-          const res =  await axios.post(backendURL + "/api/signup" , formData);
+          const res =  await axios.post(backendURL + "/api/signup" , {email : formData.email , password : formData.password , name : formData.name});
           
           if(res.status == 200)
           {
