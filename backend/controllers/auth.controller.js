@@ -3,7 +3,7 @@ import User from "../models/user.model.js";
 
 import asyncWrapper from "../utils/asyncWrapper.utils.js";
 
-import transporter from "../utils/nodemailer.utils.js";
+import sendEmail from "../utils/nodemailer.utils.js";
 
 import jwt from "jsonwebtoken";
 
@@ -42,14 +42,26 @@ const signUp = asyncWrapper( async(req , res) =>{
 
     // send email to user after successful signup 
 
-    // const emailOptions = {
-    //     from : process.env.SENDER_EMAIL,
-    //     to : email,
-    //     subject : "Welcome to Auth App",
-    //     text : `Hi, your account with email id ${email} has been successfully created, verification password will be sent shortly`
-    // }
+    const html = ` 
 
-    // await transporter.sendMail(emailOptions);
+        <p>Hi, ${name}</p>
+         <p>Your account was created successfully with ${email}.</p>
+        <p>Welcome to Auth App.</p>
+
+    `;
+
+    try
+    {
+        await sendEmail({
+            to : email,
+            subject : "Welcome to Auth App",
+            html
+        });
+    }
+    catch(err)
+    {
+        throw new Error("problem sending email");
+    }
 
     return res.status(200).json({message : "account created successfully"});
 
@@ -118,16 +130,26 @@ const sendVerificationOtp = ( async(req , res) =>{
     user.verifyOtp = otp;
     user.verifyOtpExpireAt = Date.now() * 10 * 60 * 1000;  // otp expiry duration is 10 minutes
 
+
     // now send the same otp to the current user email 
 
-    const emailOptions = {
-        from : process.env.SENDER_EMAIL,
-        to : user.email,
-        subject : "Verification OTP",
-        text : `Hi,Your OTP is ${otp}.Please use this OTP to verify your account`
-    }
+    const html = ` 
 
-    await transporter.sendMail(emailOptions);
+       <p>Please use ${otp} to verify your account</p>
+    `;
+
+    try
+    {
+        await sendEmail({
+            to : user.email,
+            subject : "Account Verification OTP",
+            html
+        });
+    }
+    catch(err)
+    {
+        throw new Error("problem sending OTP");
+    }
 
     await user.save();
 
@@ -202,14 +224,21 @@ const sendResetOtp = asyncWrapper( async(req , res) =>{
 
     user.save();
 
-    const emailContent = {
-        from : process.env.SENDER_EMAIL,
-        to : email,
-        subject : "Reset Password OTP",
-        text : `Hi,your OTP for resetting your password is ${Otp}`
+    const html = `
+        <p>Your OTP for resetting password is ${Otp}
+    `;
+    try 
+    {
+        await sendEmail ({
+            to : user.email,
+            subject : "Reset Password OTP",
+            html
+        })
     }
-
-    await transporter.sendMail(emailContent);
+    catch(err)
+    {
+        throw new Error("error sending reset password OTP");
+    }
 
     return res.status(200).json({message : "OTP for resetting your account password is sent successfull to email"});
 });
