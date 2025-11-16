@@ -7,8 +7,6 @@ const verifyAccessToken = async(req , res , next) =>{
     try 
     {
         const accessToken = req.header("Authorization")?.replace("Bearer " , "");
-
-        console.log(accessToken);
         
         if(!accessToken) return res.status(401).json({message : "access token not found"});
 

@@ -83,9 +83,11 @@ function VerifyAccount()
 
 
     const handleKeyUp = (e , index) => {
-        if(e.key == "Backspace" || e.key == "ArrowLeft" && index > 0)
+
+
+        if( (e.key == "Backspace" || e.key == "ArrowLeft") && index > 0)
         {
-            inputRefs.current[index - 1].focus();
+            inputRefs.current[index - 1]?.focus();
         }
 
         if(e.key == "ArrowRight" && index < formBox.length - 1)
@@ -96,7 +98,7 @@ function VerifyAccount()
                 element.setSelectionRange(1 , 1);
             }
             
-            inputRefs.current[index + 1].focus();
+            inputRefs.current[index + 1]?.focus();
         }
 
     }

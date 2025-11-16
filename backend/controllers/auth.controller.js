@@ -25,7 +25,6 @@ const generate_Access_Refresh_Token = async(userId) =>{
 const signUp = asyncWrapper( async(req , res) =>{
 
     const {email , password , name} = req.body;
-    console.log(email , password , name);
 
     if(!email || !password || !name) throw new Error("all fields are required");
 
@@ -130,10 +129,7 @@ const sendVerificationOtp = ( async(req , res) =>{
 
     // now send the same otp to the current user email 
 
-    const html = ` 
-
-       <p>Please use ${otp} to verify your account</p>
-    `;
+    const html = ` <p>Please use ${otp} to verify your account</p> `;
 
     try
     {
@@ -184,7 +180,7 @@ const verifyAccount = ( async(req , res) =>{
 // controller to check if account is verified or not 
 const isAuthenticated = ( async(req , res) =>{
 
-    const token = req.cookie?.token || req.headers?.authorization?.split(" ")[1];
+    const token = req.headers?.authorization?.split(" ")[1];
 
     if(!token) return res.status(401).json({message : "required token error"});
 
@@ -222,7 +218,7 @@ const sendResetOtp = asyncWrapper( async(req , res) =>{
     user.save();
 
     const html = `
-        <p>Your OTP for resetting password is ${Otp}
+        <p>Your OTP to reset your password is ${Otp}
     `;
     try 
     {
