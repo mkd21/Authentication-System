@@ -3,7 +3,7 @@ import User from "../models/user.model.js";
 
 import asyncWrapper from "../utils/asyncWrapper.utils.js";
 
-import sendEmail from "../utils/nodemailer.utils.js";
+import sendEmail from "../utils/EmailSendSetup.utils.js";
 
 import jwt from "jsonwebtoken";
 
@@ -43,14 +43,12 @@ const signUp = asyncWrapper( async(req , res) =>{
     // send email to user after successful signup 
 
     const html = ` 
-
-        <p>Hi, ${name}</p>
-         <p>Your account was created successfully with ${email}.</p>
-        <p>Welcome to Auth App.</p>
-
+        <p> Hi ${name},  
+        <p>Your account was created successfully using ${email}.</p>
+        <p>Welcome to Auth App 🎉</p>
     `;
 
-    try
+    try 
     {
         await sendEmail({
             to : email,
@@ -60,11 +58,10 @@ const signUp = asyncWrapper( async(req , res) =>{
     }
     catch(err)
     {
-        throw new Error("problem sending email");
+        console.log("Failed to send email:", err);
     }
 
     return res.status(200).json({message : "account created successfully"});
-
 });
 
 const login = asyncWrapper( async(req , res) =>{
